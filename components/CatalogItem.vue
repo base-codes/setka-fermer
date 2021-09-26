@@ -21,6 +21,7 @@
     <!-- <inc-dec v-model="sheepCount" :min="0" /> -->
     <b-button
       v-if="check"
+      class="btn"
       variant="primary"
       @click="
         setItem(
@@ -36,7 +37,7 @@
             weight,
           ],
           'primary',
-          'b-toaster-bottom-left'
+          'b-toaster-top-right'
         )
       "
     >
@@ -79,6 +80,9 @@ export default {
         toaster: tsst,
         solid: true
       })
+    },
+    showModal () {
+      this.$root.$emit('bv::show::modal', 'modalCart', '#btnShow')
     }
 
   },
@@ -88,7 +92,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scopped>
 .b-toast-primary.b-toast-solid .toast {
   background-color: #001d6c;
   color: white;
@@ -116,5 +120,10 @@ export default {
 
 .close.ml-auto.mb-1 {
   color: white;
+}
+
+.btn{
+  display: block;
+  margin-top: 20px;
 }
 </style>

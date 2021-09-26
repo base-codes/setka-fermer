@@ -35,6 +35,9 @@
               {{ productsQuantity }}
             </p>
           </b-nav-item>
+          <b-nav-item to="/">
+            Отзывы
+          </b-nav-item>
           <b-nav-item
             id="whatsapp"
             class="whatsapp"
@@ -75,7 +78,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .navbar-collapse.collapse.show,
 .navbar-collapse.collapsing {
   background-color: white;

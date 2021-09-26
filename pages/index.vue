@@ -236,11 +236,135 @@
             </p>
             <p class="discharged-text">
               Для получения более подробной информации оставьте заявку
-              менедежеру продаж заполнив контактную форму в разделе контакты.
+              менедежеру продаж заполнив контактную форму нажав на кнопку ниже.
             </p>
-            <b-button variant="primary" squared to="/contact" @click="goal1">
-              Оставить заявку
-            </b-button>
+            <div />
+            <div>
+              <b-button v-b-modal.modal-1>
+                Оставить заявку
+              </b-button>
+
+              <b-modal
+                id="modal-1"
+                onclick="document.querySelector('.info.container').textContent = 'Успешно отправлено.'"
+                ok-title="Отправить"
+                cancel-title="Отмена"
+              >
+                <div>
+                  <b-form v-if="show" @submit="onSubmit" @reset="onReset">
+                    <b-form-group
+                      id="input-group-1"
+                      label="Ваш телефон:"
+                      label-for="input-1"
+                    >
+                      <b-form-input
+                        id="input-1"
+                        v-model="form.email"
+                        type="phone"
+                        placeholder="Напишите телефон"
+                        required
+                      />
+                    </b-form-group>
+
+                    <b-form-group id="input-group-2" label="Ваше Имя:" label-for="input-2">
+                      <b-form-input
+                        id="input-2"
+                        v-model="form.name"
+                        placeholder="Ваше имя"
+                        required
+                      />
+                    </b-form-group>
+
+                    <b-button type="submit" variant="primary">
+                      Отправить
+                    </b-button>
+                    <b-button type="reset" variant="danger">
+                      Отмена
+                    </b-button>
+                  </b-form>
+                </div>
+              </b-modal>
+            </div>
+
+            <!-- Form
+
+            <div>
+              <b-form v-if="show" @submit="onSubmit" @reset="onReset">
+                <b-form-group
+                  id="input-group-1"
+                  label="Ваш телефон:"
+                  label-for="input-1"
+                >
+                  <b-form-input
+                    id="input-1"
+                    v-model="form.email"
+                    type="phone"
+                    placeholder="Напишите телефон"
+                    required
+                  />
+                </b-form-group>
+
+                <b-form-group id="input-group-2" label="Ваше Имя:" label-for="input-2">
+                  <b-form-input
+                    id="input-2"
+                    v-model="form.name"
+                    placeholder="Ваше имя"
+                    required
+                  />
+                </b-form-group>
+
+                <b-button type="submit" variant="primary">
+                  Отправить
+                </b-button>
+                <b-button type="reset" variant="danger">
+                  Отмена
+                </b-button>
+              </b-form>
+            </div>
+
+            Form-->
+
+            <div
+              id="exampleModal"
+              class="modal fade"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 id="exampleModalLabel" class="modal-title">
+                      New message
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                        <input id="recipient-name" type="text" class="form-control">
+                      </div>
+                      <div class="form-group">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea id="message-text" class="form-control" />
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                      Close
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                      Send message
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </b-col>
         </b-row>
       </b-container>
@@ -376,10 +500,39 @@ export default {
     ...mapMutations('photoItem', ['CHANGE_MODAL']),
     goal1 () {
       this.$yandexMetrika.reachGoal('otpravka_kredit')
+    },
+    onSubmit (event) {
+      event.preventDefault()
+      alert(JSON.stringify(this.form))
+    },
+    onReset (event) {
+      event.preventDefault()
+      // Reset our form values
+      this.form.email = ''
+      this.form.name = ''
+      this.form.food = null
+      this.form.checked = []
+      // Trick to reset/clear native browser form validation state
+      this.show = false
+      this.$nextTick(() => {
+        this.show = true
+      })
     }
   },
   computed: {
     ...mapState('photoItem', ['photo'])
+  },
+  data () {
+    return {
+      form: {
+        email: '',
+        name: '',
+        food: null,
+        checked: []
+      },
+      foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
+      show: true
+    }
   }
 }
 </script>

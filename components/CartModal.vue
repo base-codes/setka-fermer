@@ -265,7 +265,7 @@ export default {
       selectedCity: '',
       street: '',
       selectDelivery: '',
-      selected: 'A',
+      selected: 'B',
       options: [
         { item: 'A', name: 'Самовывоз' },
         { item: 'B', name: 'Доставка до ближайшено терминала' },
